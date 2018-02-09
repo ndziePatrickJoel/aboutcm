@@ -1,0 +1,54 @@
+{% if view360question_list %} {% for question in view360question_list %} {% load qanda_filters %}
+<div>
+    <div class="box box-solid">
+        
+                <div class="box-header">
+                        <a href="{% url 'question_details' question.id %}" class="aboutcm-primary-text">
+                        <h4>
+                            
+                            {{ question.title | slice:":500" }}
+                        </h4>
+                        <div class="widget-user-header">
+                                <div class="widget-user-image">
+                                  <img class="img-circle" width="50" src="https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg" alt="User Avatar">
+                                </div>
+                                <!-- /.widget-user-image -->
+                                <h3 class="widget-user-username">{{ question.user_title }}</h3>
+                                <h5 class="widget-user-desc">Lead Developer</h5>
+                        </div>
+                </a>
+                
+            
+        <div class="box-body">         
+            <p class="">
+                {% for tag in question.tags|qanda_split:";" %}
+                <span class="badge badge-default"><a href="#" style='color:white '>{{ tag }}</a></span> {% endfor %}
+                <span class="badge aboutcm-active pull-right"><a href="#" style="color:white">{{ question.category_name }}</a></span>
+            </p>
+            <span class="pull-left">
+                    <span class="fa fa-clock-o text-danger"></span>
+            <small>{{ question.created_at | date:"d/m/y f"}}</small>
+            </span>
+            <span class="pull-right">
+                    <i class="fa fa-eye text-yellow"> &nbsp;{{ question.nb_views }}</i>
+                    &nbsp;
+                    <i class="fa fa-comment text-success">&nbsp;{{ question.nb_answers }}</i>
+            </span>
+        </div>
+    </div>
+</div>
+{% endfor %} {% else %}
+<p>Aucune question trouvée</p>
+{% endif %} {% block pagination %} {% if is_paginated %}
+<div class="pagination pull-right" style="padding-top:30px;">
+    <span class="page-links aboutcm-primary-text">
+              {% if page_obj.has_previous %}
+                  <a class='btn aboutcm-active btn-sm' href="{{ request.path }}?page={{ page_obj.previous_page_number }}">précédente</a>
+              {% endif %}
+              <span class="page-current aboutcm-primary-text">
+                  Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}.
+              </span> {% if page_obj.has_next %}
+    <a class='btn aboutcm-active btn-sm' href="{{ request.path }}?page={{ page_obj.next_page_number }}">Suivante</a> {% endif %}
+    </span>
+</div>
+{% endif %} {% endblock %}

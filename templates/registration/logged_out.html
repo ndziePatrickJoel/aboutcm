@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %} {% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> {% block stylesheets %} {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}"> {% endblock %}
+</head>
+
+<body style="padding-top:150px;">
+    <main role="main">
+        <p>Logged out!</p>
+
+        <a href="{% url 'login'%}">Click here to login again.</a>
+    </main>
+    <footer class="container">
+        <p>&copy; Company 2017</p>
+    </footer>
+    {% block javascripts %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% endblock %}
+</body>
+
+</html>

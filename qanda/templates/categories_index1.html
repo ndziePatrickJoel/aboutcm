@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %} {% block title %} Sujets {% endblock %} {% block content %}
+<!--<div class="jumbotron">
+    <div class="container">
+        <h3 class="display-6">Bonjour,<br/> Que voulez-vous savoir à propos du Cameroun?</h3>
+        <form>
+
+        </form>
+    </div>
+</div>-->
+
+<div class="container" style="padding-top:100px;">
+    <!-- Example row of columns -->
+    <h1 class='display-6'>Sujets</h1>
+    <hr>
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="card">
+                <div class="card-body">
+                    {% load static %}
+                    <a href="facebook.com" style="border:none"><img class="img" style="width:100%" src="{% static 'img/icons8-school-100.png' %}" alt="Card image cap">
+                    </a>
+                    <center><a>Etudes</a></center>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="card">
+                <div class="card-body">
+                    {% load static %}
+                    <a href="facebook.com"><img class="img" style="width:100%" src="/static/uploads/question_category/icons8-airport-50.png" alt="Card image cap">
+                    </a>
+                    <center><a>Mode</a></center>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

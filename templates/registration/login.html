@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %} {% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> {% block stylesheets %} {% load static %}
+    <link rel="stylesheet" href="{% static 'template/bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'template/bower_components/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{% static 'template/bower_components/Ionicons/css/ionicons.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'template/dist/css/AdminLTE.min.css' %}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{% static 'template/dist/css/skins/skin-red-light.css' %}"> {% endblock %}
+</head>
+
+<body style="padding-top:200px;">
+    <main role="main">
+        <div classs="row">
+            <div class="col-xs-12 col-md-3 col-md-offset-2">
+                <h4 class="text-danger text-center">
+                    <strong>Connectez-vous à AboutCM</strong>
+                </h4>
+                <h6 class="text-center">
+                    Nouveau sur AboutCM ? <a href="#">Inscrivez-vous</a>
+                </h6>
+                <p style="font-size: 0.8em" class="text-center">
+                    <small>
+                    En continuant, je certifie avoir au moins 3 ans, avoir lu et approuvé <a href="#">les conditions d'utilisation</a> et <a href="#">la politique de confidentialité</a>.
+                        </small>
+
+                </p>
+                <br/>
+                <p>
+                    <a class="btn btn-block btn-social btn-facebook">
+                        <i class="fa fa-facebook"></i> Connectez-vous avec Facebook
+                    </a>
+                </p>
+                <p>
+                    <a class="btn btn-block btn-social btn-google">
+                        <i class="fa fa-google-plus"></i> Sign in with Google
+                    </a>
+                </p>
+                <h3 class="text-center">
+                    OU
+                </h3>
+                {% if form.errors %}
+                <p>Your username and password didn't match. Please try again.</p>
+                {% endif %} {% if next %} {% if user.is_authenticated %}
+                <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+                {% else %}
+                <p>Please login to see this page.</p>
+                {% endif %} {% endif %}
+
+                <form action="" method="post">
+                        {%csrf_token%} {% for error in form.non_field_errors %}
+                        <div class="form-group has-errors text-danger small">
+                            {{error}}
+                        </div>
+                        {% endfor %} {% for field in form %}
+                        <div class="form-group has-errors text-danger small">
+                            {{field.errors}}
+                        </div>
+                        <div class="form-group has-errors text-danger small">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12" style="padding-top:20px;">
+                                <strong>{{ field.label }}</strong>
+                                <div style="width:100%">
+                                    {{field}}
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        {% endfor %}
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-2 pull-right">
+                                <button class="btn aboutcm-active">Enregistrer</button>
+                            </div>
+                        </div>
+                    </form>
+
+                
+
+                {# Assumes you setup the password_reset view in your URLconf #}
+                <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+            </div>
+            <div class="col-xs-12 col-md-6">
+
+            </div>
+        </div>
+    </main>
+
+    {% block javascripts %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% endblock %}
+</body>
+
+</html>

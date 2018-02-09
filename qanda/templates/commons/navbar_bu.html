@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-danger">
+    <a class="navbar-brand" href="#">aboutCM</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'index' %}">Accueil <span class="sr-only">(current)</span></a>
+            </li>
+            <!-- >-->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'qa_index' %}">Q&A</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'questions' '' %}">Questions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Utilisateurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'categories_index' %}">Catégories</a>
+            </li>
+
+            <form class="form-inline my-3 my-sm-1 pull-center">
+                <div class="input-group input-group-sm md-only" style='width:385px;padding-left:25px;'>
+                    <input type="text" class="form-control" placeholder="Que voulez-vous savoir à propos du Cameroun?" aria-label="Username" aria-describedby="sizing-addon2" style='border-right:none'>
+                    <span class="input-group-addon" id="sizing-addon2" style='border:none;'>@</span>
+                </div>
+            </form>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'new_question' %}">
+                    <button type="button" class="btn btn-danger btn-light btn-sm"> Poser une question</button>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                {% if user.is_authenticated %}
+                <a class="nav-link active dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ user.get_username }}</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}?next={{request.path}}">Déconnexion</a>
+                </div>
+                {% else %}
+                <a class="nav-link dropdown-toggle" href="{% url 'login' %}?next={{request.path}}">Connexion</a> {% endif %}
+            </li>
+        </ul>
+
+    </div>
+</nav>

@@ -1,0 +1,52 @@
+{% extends "base_generic.html" %} {% load static %} {% block title %} Liste des questions {% endblock %} {% block navigation %}
+<li><a href="#"><i class="fa fa-home"></i> Accueil</a></li>
+<li class="active"><a href="#">Nouvelle Question</a></li>
+{% endblock %} {% block content %} {% load qanda_filters %}
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-8">
+        <h3>Nouvelle Question</h3>
+        <hr>
+    </div>
+    <hr>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-8">
+        <div class="box box-danger no-border">
+            <div class="box-body">
+                <form action="" method="post">
+                    {%csrf_token%} {% for error in form.non_field_errors %}
+                    <div class="form-group has-errors text-danger small">
+                        {{error}}
+                    </div>
+                    {% endfor %} {% for field in form %}
+                    <div class="form-group has-errors text-danger small">
+                        {{field.errors}}
+                    </div>
+                    <div class="form-group has-errors text-danger small">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-12 col-md-12" style="padding-top:20px;">
+                            <strong>{{ field.label }}</strong>
+                            <div style="width:100%">
+                                {{field}}
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    {% endfor %}
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 pull-right">
+                            <button class="btn aboutcm-active">Enregistrer</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %} {% block javascripts %} {{ parent }}
+<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+{{ form.media }} {% endblock %}
