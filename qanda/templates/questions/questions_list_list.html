@@ -1,25 +1,25 @@
 {% if view360question_list %} {% for question in view360question_list %} {% load qanda_filters %}
 <div>
     <div class="box box-solid">
-        
-                <div class="box-header">
-                        <a href="{% url 'question_details' question.id %}" class="aboutcm-primary-text">
-                        <h4>
-                            
-                            {{ question.title | slice:":500" }}
-                        </h4>
-                        <div class="widget-user-header">
-                                <div class="widget-user-image">
-                                  <img class="img-circle" width="50" src="https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg" alt="User Avatar">
-                                </div>
-                                <!-- /.widget-user-image -->
-                                <h3 class="widget-user-username">{{ question.user_title }}</h3>
-                                <h5 class="widget-user-desc">Lead Developer</h5>
-                        </div>
-                </a>
-                
-            
-        <div class="box-body">         
+
+        <!--
+        <a href="{% url 'question_details' question.id %}" class="aboutcm-primary-text">
+           
+            <div class="widget-user-image">
+                <img class="img-circle" width="50" src="https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg" alt="User Avatar">
+            </div>
+            <h3 class="widget-user-username">{{ question.user_title }}</h3>
+            <h5 class="widget-user-desc">Lead Developer</h5>
+
+        </a> -->
+
+
+        <div class="box-body">
+            <h5 style="color:#d81b60">
+                <strong>
+                {{ question.title | slice:":500" }}
+                </strong>
+            </h5>
             <p class="">
                 {% for tag in question.tags|qanda_split:";" %}
                 <span class="badge badge-default"><a href="#" style='color:white '>{{ tag }}</a></span> {% endfor %}

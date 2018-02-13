@@ -9,9 +9,7 @@ urlpatterns = [
     url(r'^categories$', views.categoriesIndex, name='categories_index'),
     url(r'^questions/(?P<slug>\w*)$', views.View360QuestionListView.as_view(),name="questions"),
     url(r'^question/(?P<pk>\d+)$', views.questionDetailView, name="question_details"),
-    url(r'^question_category_autocomplete/$', views.QuestionCategoryAutocomplete.as_view(), 
-    name="question_category_autocomplete"),
-    url(r'^question_tags_autocomplete/$', 
-    views.QuestionTagsAutocomplete.as_view(create_field='title'), 
-    name="question_tags_autocomplete")
+    url(r'^question_category_autocomplete/$', views.QuestionCategoryAutocomplete.as_view(),  name="question_category_autocomplete"),
+    url(r'^question_tags_autocomplete/$',views.QuestionTagsAutocomplete.as_view(create_field='title'), name="question_tags_autocomplete"),
+    url(r'^profile/$', views.profile_view, name='profile_view')
 ]

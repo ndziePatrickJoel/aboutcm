@@ -7,9 +7,17 @@ body {
     padding-top: 50px;
 }
 
-.aboutcm-primary-text
-{
-    color:#605ca8;
+.aboutcm-primary-text {
+    color: #605ca8;
+}
+
+.aboutcm-secondary {
+    background-color: #d81b60 !important;
+    color: white !important;
+}
+
+.aboutcm-secondary-text {
+    color: #d81b60;
 }
 
 

@@ -1,0 +1,120 @@
+{% extends "base_generic.html" %} {% block title %} {{ question.title}} {% endblock %} {% block content %} {% load static %} {% load qanda_filters %}
+<!--<div class="jumbotron">
+    <div class="container">
+        <h3 class="display-6">Bonjour,<br/> Que voulez-vous savoir à propos du Cameroun?</h3>
+        <form>
+
+        </form>
+    </div>
+</div>-->
+
+<div class="container" style="padding-top:50px;">
+    <!-- Example row of columns -->
+    <section class="content-header">
+        <h1>
+            User Profile
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Examples</a></li>
+            <li class="active">User profile</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <!-- Profile Image -->
+                <div class="box aboutcm-primary-text">
+                    <div class="box-body box-profile">
+                        <img class="profile-user-img img-responsive img-circle" src="https://i.ytimg.com/vi/rFYgVyVHB2I/hqdefault_live.jpg" alt="User profile picture">
+                        <h3 class="profile-username text-center">{{ profile_user.first_name }} {{ profile_user.last_name }}</h3>
+
+                        <p class="text-muted text-center">{{ profile_user.title }}</p>
+
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>Questions</b> <a class="pull-right">5</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Réponses</b> <a class="pull-right">6</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Followers</b> <a class="pull-right">1,322</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Following</b> <a class="pull-right">543</a>
+                            </li>
+                        </ul>
+                        <a href="#" class="btn aboutcm-active btn-block"><b>Suivre</b></a>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+                <!-- About Me Box -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">A propos</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        {{ profile_user.profile.bio }}
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-8">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#activity" data-toggle="tab">Questions</a></li>
+                        <li><a href="#timeline" data-toggle="tab">Réponses</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="#settings" data-toggle="tab">Paramètres</a></li>
+                        {% endif %}
+                    </ul>
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="activity">
+                            <!-- Post -->
+                            <!-- /.post -->
+
+                            <!-- Post -->
+
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="timeline">
+                            <!-- The timeline -->
+
+                        </div>
+                        <!-- /.tab-pane -->
+                        {% if user.is_authenticated %}
+                        <div class="tab-pane" id="settings">
+                            <form class="form-horizontal">
+                                {% csrf_token %} {{ user_form.as_p }} {{ profile_form.as_p}}
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        {% endif %}
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+    </section>
+    <!-- /.content -->
+</div>
+{% endblock %} {% block javascripts %} {{ parent }} {{ form.media }} {% endblock %}

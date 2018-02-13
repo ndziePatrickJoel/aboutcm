@@ -22,45 +22,54 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-8">
-            <h3 class='display-6'><strong>{{ question.title }}</strong></h3>
+
+            <a href="{% url 'question_details' question.id %}" class="aboutcm-primary-text">
+                <h3>
+                    <strong>
+                    {{ question.title }}
+                    </strong>
+                </h3>
+                <div class="widget-user-image">
+                    <img class="img-circle" width="50" src="https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg" alt="User Avatar">
+                </div>
+                <!-- /.widget-user-image -->
+                <h4 class="widget-user-username">{{ question.user_title }}</h4>
+                <h5 class="widget-user-desc">Lead Developer</h5>
+
+            </a>
+            </strong>
             <hr>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-xs-12 col-md-8">
-            <ul class="nav navbar-nav">
-                <!-- >-->
-                <li>
-                    <a href="#nothing" class="text-success"><i class='ion-edit'></i> <strong>Répondre</strong></a>
-                </li>
-                <li>
-                    <a href="#nothing" class="text-warning"><i class='fa fa-exchange'></i> 
-                        <strong>Demander une réponse</strong></a>
-                </li>
-                <li>
-                    <a href="#nothing" class="text-danger"> <strong>Suivre la question</strong></a>
-                </li>
-                <li>
-                    <a href="#nothing" class="text-danger"> <strong>Commentaires (25)</strong></a>
-                </li>
-            </ul>
+
+            <a href="#nothing" class="btn btn-sm bg-maroon btn-flat"><i class='ion-edit'></i> <strong>Répondre</strong></a> &nbsp;
+            <a href="#nothing" class="btn btn-info btn-flat btn-sm"><i class='fa fa-exchange'></i> 
+                        <strong>Demander une réponse</strong></a> &nbsp;
+            <a href="#nothing" class="btn btn-sm btn-default btn-flat"> <strong>Suivre la question</strong></a>
+            &nbsp;
+            <a href="#nothing" class="btn btn-sm btn-default btn-flat"> <strong><i class='fa fa-commenting'></i> Commentaire(s) </strong></a>
+
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="padding-top:15px;">
         <div class="col-xs-12 col-md-8">
             <div class="box box-default no-border">
-                <div class="box-header">
-
+                <div class="box-header with-border">
+                    <h5>Détails de la question</h5>
                 </div>
                 <div class="box-body">
 
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="bd-example">
+                                <!--<blockquote> -->
                                 {{ question.details | safe }}
                                 <!--{{ question.details | slice:":500" | safe }} <a href="#">...Plus</a>-->
+                                <!--</blockquote> -->
                             </div>
                         </div>
                     </div>
@@ -70,7 +79,7 @@
     </div>
     <div class="row" style="padding-top:50px;">
         <div class="col-xs-12 col-sm-8 col-md-8">
-            <h3 class='display-6 text-danger'>{{ question.answer_set.all | length }} Réponse(s)</h3>
+            <h3 class='display-6 aboutcm-primary-text'>{{ question.answer_set.all | length }} Réponse(s)</h3>
             <strong><hr></strong>
         </div>
         <hr>
@@ -78,7 +87,7 @@
     {% for answer in answers %}
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-8">
-            <div class="box box-danger collapsed-box ">
+            <div class="box box-default collapsed-box no-border">
                 <div class="box-header with-border">
                     <h3 class="box-title expandable">
                         <i class='ion-person' style="font-size:1.3em"></i>{{ answer.username }}, le {{ answer.created_at }}
@@ -93,15 +102,13 @@
 
                     <i class=""></i>
                     <p>
-                        <a class="btn btn-success btn-sm text-white">
+                        <a class="btn aboutcm-active btn-sm text-white">
                             <i class="ion-thumbsup"></i> {{ answer.nb_upvotes }}
                         </a>&nbsp;
                         <a class="btn btn-danger btn-sm  text-white">
                             <i class="ion-thumbsdown"></i> {{ answer.nb_downvotes }}</a>
-
                         <span class='float-right'>                        
-                        <a class="btn btn-white text-primary"><i class='ion-social-facebook'></i></a>
-                        <a class="btn btn-white text-primary"><i class='ion-social-twitter'></i></a>
+                        <a class="btn btn-sm btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>                        <a class="btn btn-white text-primary"><i class='ion-social-twitter'></i></a>
                         <a class="btn btn-white text-danger"><i class="ion-social-googleplus"></i></a>
                     </span>
                     </p>

@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -9,7 +10,7 @@ from django.db.models.signals import post_save
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.TextField(max_length=300, blank=True)
-    bio = models.TextField(blank=True)
+    bio = RichTextField(blank=True)
     location = models.CharField(blank = True, max_length=1024)
     user_picture = models.FileField(blank=True, null=True)
 

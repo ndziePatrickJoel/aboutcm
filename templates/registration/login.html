@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{% static 'template/dist/css/skins/skin-red-light.css' %}"> {% endblock %}
 </head>
 
-<body style="padding-top:200px;">
+<body style="padding-top:100px;">
     <main role="main">
         <div classs="row">
             <div class="col-xs-12 col-md-3 col-md-offset-2">
@@ -47,52 +47,53 @@
                 <h3 class="text-center">
                     OU
                 </h3>
-                {% if form.errors %}
-                <p>Your username and password didn't match. Please try again.</p>
-                {% endif %} {% if next %} {% if user.is_authenticated %}
-                <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
-                {% else %}
-                <p>Please login to see this page.</p>
-                {% endif %} {% endif %}
+                <div>
+                    {% if form.errors %}
+                    <p>Your username and password didn't match. Please try again.</p>
+                    {% endif %} {% if next %} {% if user.is_authenticated %}
+                    <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+                    {% else %}
+                    <p>Please login to see this page.</p>
+                    {% endif %} {% endif %}
 
-                <form action="" method="post">
+                    <form action="" method="post" class="form-horizontal">
                         {%csrf_token%} {% for error in form.non_field_errors %}
                         <div class="form-group has-errors text-danger small">
                             {{error}}
                         </div>
-                        {% endfor %} {% for field in form %}
+                        {% endfor %}
                         <div class="form-group has-errors text-danger small">
-                            {{field.errors}}
-                        </div>
-                        <div class="form-group has-errors text-danger small">
+                            {{field.username.errors}}
                         </div>
                         <div class="form-group">
-                            <div class="col-xs-12" style="padding-top:20px;">
-                                <strong>{{ field.label }}</strong>
-                                <div style="width:100%">
-                                    {{field}}
-                                </div>
+                            <div class="col-xs-12" style="">
+                                <strong>Email</strong>
+                                <input type="text" class="form-control" id="id_username" name="username" />
                             </div>
                         </div>
-                        <br/>
-                        <br/>
-                        {% endfor %}
                         <div class="form-group">
-                            <div class="col-xs-12 col-sm-2 pull-right">
-                                <button class="btn aboutcm-active">Enregistrer</button>
+                            <div class="col-xs-12" style="">
+                                <strong>Mot de passe</strong>
+                                <input type="password" class="form-control" id="id_password" name="password" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div style="">
+                                    <button class="btn btn-flat bg-maroon pull-right">Connexion</button>
+                                </div>
                             </div>
                         </div>
                     </form>
 
-                
 
-                {# Assumes you setup the password_reset view in your URLconf #}
-                <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
-            </div>
-            <div class="col-xs-12 col-md-6">
+                    {# Assumes you setup the password_reset view in your URLconf #}
+                    <p><a href="{% url 'password_reset' %}">Mot de passe oublié?</a></p>
+                </div>
 
             </div>
+
         </div>
     </main>
 

@@ -34,11 +34,10 @@
                         </div>
                     </div>
                     <br/>
-                    <br/>
-                    {% endfor %}
+                    <br/> {% endfor %}
                     <div class="form-group">
                         <div class="col-xs-12 col-sm-2 pull-right">
-                            <button class="btn aboutcm-active">Enregistrer</button>
+                            <button class="btn btn-sm btn-flat bg-maroon">Enregistrer</button>
                         </div>
                     </div>
                 </form>
@@ -47,6 +46,6 @@
     </div>
 
 </div>
-{% endblock %} {% block javascripts %} {{ parent }}
+{% endblock %} {% block javascripts %}
 <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-{{ form.media }} {% endblock %}
+{{ parent }} {{ form.media }} {% endblock %}
