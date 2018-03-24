@@ -16,6 +16,9 @@
                         <a href="{% url 'qa_index' %}">Q&A</a>
                     </li>
                     <li>
+                        <a href="{% url 'qa_index' %}">Places</a>
+                    </li>
+                    <li>
                         <a href="{% url 'questions' '' %}">Questions</a>
                     </li>
                     <li class="dropdown">
@@ -29,17 +32,13 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
-                    </div>
-                </form>
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="{% url 'new_question' %}">
-                            <i class='fa fa-question'></i> Nouvelle question
-                        </a>
+                    <li>                    
+                        <button class="btn btn-flat bg-maroon" style="margin-top:7px;">
+                                    <a href="{% url 'new_question' %}" style="color:white">
+                                        <i class='fa fa-plus'></i> Nouvelle question
+                                    </a>
+                        </button>
+                        
                     </li>
                 </ul>
             </div>
@@ -150,12 +149,12 @@
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-                            <img src="https://i.ytimg.com/vi/rFYgVyVHB2I/hqdefault_live.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">{{ user.last_name }}</span>
+                            <img src="{{ user.profile.user_picture.url }}" class="user-image" alt="User Image">
+                            <span class="hidden-xs">{{ user.first_name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
-                                <img src="https://i.ytimg.com/vi/rFYgVyVHB2I/hqdefault_live.jpg" class="img-circle" alt="User Image">
+                                <img src="{{ user.profile.user_picture.url }}" class="img-circle" alt="User Image">
 
                                 <p>
                                     {{ user.last_name }}

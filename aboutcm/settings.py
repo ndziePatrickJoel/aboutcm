@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'haystack',
     'qanda.apps.QandaConfig',
     'ckeditor',
     'ckeditor_uploader'
@@ -83,12 +84,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'aboutcm',
         'USER': 'root',
-        'PASSWORD': 'adaFlora95',
+        'PASSWORD': 'Orange2017',
         'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }
-
 
 
 # Password validation
@@ -166,3 +166,11 @@ CKEDITOR_CONFIGS = {
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+    },
+}

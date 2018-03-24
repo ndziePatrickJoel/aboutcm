@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views import generic
 from ..models import Question, View360Question, QuestionCategory, Answer, QuestionTag, AnswerComment, View360Answer
-from ..forms import QuestionForm
+from ..forms import QuestionForm, AnswerForm
 from dal import autocomplete
 from django.http import HttpResponseRedirect,Http404
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -17,6 +18,32 @@ def treatRawString(rawString):
     result = rawString.replace("img", "img class='img img-responsive'")
     
     return result
+
+def newAnswerView(request):
+
+    if request.method == 'POST':
+
+        form = AnswerForm(request.POST)
+
+        if form.is_valid():
+            answer = Answer()
+            answer.details = request.POST.get('details', None)
+            answer.question = Question.objects.get(pk = request.POST.get('questionId'))
+        
+            if request.POST.get('anonymously') is not None:
+                answer.anonymously = True
+        
+            answer.author = request.user
+            answer.save()
+            
+            return redirect("question_details", pk=request.POST.get('questionId'))
+
+        
+        
+
+        return Json
+
+        
 
 def newQuestionView(request):
 
@@ -90,14 +117,17 @@ def questionDetailView(request, pk):
 
     #à ce niveau on récupère les réponses de la question
 
-    answers = View360Answer.objects.filter(question_id = pk)
-    
+    answers = View360Answer.objects.filter(question_id = pk)    
 
     #book_id=get_object_or_404(Book, pk=pk)
+
+    form = AnswerForm(initial = {'questionId': pk})
+
     
     return render(
         request,
         'questions/question_details.html',
-        context={'question':question, 'answers': answers}
+        context={'question':question, 'answers': answers, 'form': form}
     )
+
         

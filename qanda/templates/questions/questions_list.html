@@ -2,6 +2,19 @@
 <li><a href="#"><i class="fa fa-home"></i> Accueil</a></li>
 <li class="active"><a href="#">Toutes les questions</a></li>
 {% endblock %} {% block content %} {% load qanda_filters %}
+
+<div class="row" style="padding-top:50px;">
+    <div class="col-xs-12 col-md-8">
+    <form>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+            <input type="text" class="form-control" placeholder="Que voulez-vous savoir?">
+            <span class="input-group-addon"><span class='fa fa-search'></span></span>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-md-8">
         <h1><small>Toutes les questions</small></h1>
@@ -9,16 +22,13 @@
     </div>
     <hr>
 </div>
-
-
 <div class="row">
     <div class="col-xs-12 col-md-8">
-        <div class="nav-tabs-custom">
+        <div class="nav-tabs">            
             <ul class="nav nav-pills">
                 <li>
                     <a data-toggle="tab" {% if all_slug is True %} class="aboutcm-active" {% endif %} href="{% url 'questions' '' %}" aria-controls="pills-all" aria-selected="true"><strong>Toutes les questions</strong></a>
                 </li>
-
                 <li>
                     <a data-toggle="tab" {% if interesting_slug is True %} class="aboutcm-active" {% endif %} href="{% url 'questions' 'interesting' %}" aria-controls="pills-interesting" aria-selected="true"><strong>Intéréssantes</strong></a>
                 </li>
@@ -32,7 +42,9 @@
                     <a data-toggle="tab" {% if month_slug is True %} class="aboutcm-active" {% endif %} href="{% url 'questions' 'month' %}" aria-controls="pills-month" aria-selected="false"><strong>Mois</strong></a>
                 </li>
             </ul>
-            <div class="tab-content">
+        </div>
+            
+            <div class="tab-content" style="padding-top:5px;">
                 <div {% if all_slug is True %} class="tab-pane active" {% else %} class="tab-pane" {% endif %} id="pills-all" role="tabpanel" aria-labelledby="pills-home-tab">
                     {% include "./questions_list_list.html" %}
                 </div>
@@ -48,11 +60,8 @@
                 <div {% if month_slug is True %} class="tab-pane active" {% else %} class="tab-pane" {% endif %} id="pills-month" role="tabpanel" aria-labelledby="pills-contact-tab">
                     {% include "./questions_list_list.html" %}
                 </div>
-
-                <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
-        </div>
     </div>
 </div>
 <!-- nav-tabs-custom -->

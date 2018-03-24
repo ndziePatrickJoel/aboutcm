@@ -1,0 +1,178 @@
+{% extends "base_generic.html" %}
+    {% load static %} 
+    {% block title %} 
+        {{ question.title}} 
+    {% endblock %} 
+
+{% block content %}  
+    {% load qanda_filters %}
+<!--<div class="jumbotron">
+    <div class="container">
+        <h3 class="display-6">Bonjour,<br/> Que voulez-vous savoir à propos du Cameroun?</h3>
+        <form>
+
+        </form>
+    </div>
+</div>-->
+
+<div class="container" style="padding-top:50px;">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-8">
+            <p>
+                {% for tag in question.tags.all %}
+                <a href="#nothing"><span class="badge badge-secondary">{{ tag.title }}</span></a>{% endfor %}
+
+                <a href="#nothing" id="btnEditQuestionTags"><span class='badge badge-secondary'><i class='ion-edit'></i></span></a>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-8">
+
+            <a href="{% url 'question_details' question.id %}" class="aboutcm-primary-text">
+                <h3>
+                    <strong>
+                    {{ question.title }}
+                    </strong>
+                </h3>
+                <div class="widget-user-image">
+                    <img class="img-circle" width="50" src="https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg" alt="User Avatar">
+                </div>
+                <!-- /.widget-user-image -->
+                <h4 class="widget-user-username">{{ question.user_title }}</h4>
+                <h5 class="widget-user-desc">Lead Developer</h5>
+
+            </a>
+            </strong>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+
+            <a href="#nothing" class="btn btn-sm bg-maroon btn-flat"><i class='ion-edit'></i> <strong>Répondre</strong></a> &nbsp;
+            <a href="#nothing" class="btn btn-info btn-flat btn-sm"><i class='fa fa-exchange'></i> 
+                        <strong>Demander une réponse</strong></a> &nbsp;
+            <a href="#nothing" class="btn btn-sm btn-default btn-flat"> <strong>Suivre la question</strong></a>
+            &nbsp;
+            <a href="#nothing" class="btn btn-sm btn-default btn-flat"> <strong><i class='fa fa-commenting'></i> Commentaire(s) </strong></a>
+
+        </div>
+    </div>
+
+    <div class="row" style="padding-top:15px;">
+        <div class="col-xs-12 col-md-8">
+            <div class="box box-default no-border">
+                <div class="box-header with-border">
+                    <h5>Détails de la question</h5>
+                </div>
+                <div class="box-body">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="bd-example">
+                                <!--<blockquote> -->
+                                {{ question.details | safe }}
+                                <!--{{ question.details | slice:":500" | safe }} <a href="#">...Plus</a>-->
+                                <!--</blockquote> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-8">
+            <div class="box box-danger no-border">
+                <div class="box-body">
+                    <form action="" method="post">
+                        {%csrf_token%} {% for error in anwserForm.non_field_errors %}
+                        <div class="form-group has-errors text-danger small">
+                            {{error}}
+                        </div>
+                        {% endfor %} {% for field in answerForm %}
+                        <div class="form-group has-errors text-danger small">
+                            {{field.errors}}
+                        </div>
+                        <div class="form-group has-errors text-danger small">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-12 col-md-12" style="padding-top:20px;">
+                                <strong>{{ field.label }}</strong>
+                                <div style="width:100%">
+                                    {{field}}
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/> {% endfor %}
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-2 pull-right">
+                                <button class="btn btn-sm btn-flat bg-maroon">Enregistrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <div class="row" style="padding-top:50px;">
+        <div class="col-xs-12 col-sm-8 col-md-8">
+            <h3 class='display-6 aboutcm-primary-text'>{{ question.answer_set.all | length }} Réponse(s)</h3>
+            <strong><hr></strong>
+        </div>
+        <hr>
+    </div>
+    {% for answer in answers %}
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-8">
+                <div class="box box-default collapsed-box no-border">
+                    <div class="box-header with-border">
+                        <h3 class="box-title expandable">
+                            <i class='ion-person' style="font-size:1.3em"></i>{{ answer.username }}, le {{ answer.created_at }}
+                        </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        {{ answer.details | safe }}
+
+                        <i class=""></i>
+                        <p>
+                            <a class="btn aboutcm-active btn-sm text-white">
+                                <i class="ion-thumbsup"></i> {{ answer.nb_upvotes }}
+                            </a>&nbsp;
+                            <a class="btn btn-danger btn-sm  text-white">
+                                <i class="ion-thumbsdown"></i> {{ answer.nb_downvotes }}</a>
+                            <span class='float-right'>                        
+                            <a class="btn btn-sm btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>                        <a class="btn btn-white text-primary"><i class='ion-social-twitter'></i></a>
+                            <a class="btn btn-white text-danger"><i class="ion-social-googleplus"></i></a>
+                        </span>
+                        </p>
+                        <div class="highlight">
+                            <form>
+                                <input type="text" class="form-control">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+    {{ parent }} 
+    {{ form.media }} 
+{% endblock %}

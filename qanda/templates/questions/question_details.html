@@ -1,4 +1,11 @@
-{% extends "base_generic.html" %} {% block title %} {{ question.title}} {% endblock %} {% block content %} {% load qanda_filters %}
+{% extends "base_generic.html" %}
+    {% load static %} 
+    {% block title %} 
+        {{ question.title}} 
+    {% endblock %} 
+
+{% block content %}  
+    {% load qanda_filters %}
 <!--<div class="jumbotron">
     <div class="container">
         <h3 class="display-6">Bonjour,<br/> Que voulez-vous savoir à propos du Cameroun?</h3>
@@ -29,15 +36,19 @@
                     {{ question.title }}
                     </strong>
                 </h3>
-                <div class="widget-user-image">
-                    <img class="img-circle" width="50" src="https://wallpaperbrowse.com/media/images/3848765-wallpaper-images-download.jpg" alt="User Avatar">
+                <div class="post">
+                    <div class="user-block">
+                      <img class="img-circle img-bordered-sm" src="{{ question.asker.profile.user_picture.url }} " alt="user image">
+                          <span class="username">
+                            <a href="#" style='color:black'>{{ question.asker.first_name }} {{ question.asker.last_name }} - <small>{{ question.asker.profile.title }}</small></a>
+                            <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                          </span>
+                      <span class="description">Posté le - {{ question.created_at }}</span>
+                    </div>
                 </div>
-                <!-- /.widget-user-image -->
-                <h4 class="widget-user-username">{{ question.user_title }}</h4>
-                <h5 class="widget-user-desc">Lead Developer</h5>
+
 
             </a>
-            </strong>
             <hr>
         </div>
     </div>
@@ -45,7 +56,7 @@
     <div class="row">
         <div class="col-xs-12 col-md-8">
 
-            <a href="#nothing" class="btn btn-sm bg-maroon btn-flat"><i class='ion-edit'></i> <strong>Répondre</strong></a> &nbsp;
+            <a href="#nothing" id="responseBtn" class="btn btn-sm bg-maroon btn-flat"><i class='ion-edit'></i> <strong>Répondre</strong></a> &nbsp;
             <a href="#nothing" class="btn btn-info btn-flat btn-sm"><i class='fa fa-exchange'></i> 
                         <strong>Demander une réponse</strong></a> &nbsp;
             <a href="#nothing" class="btn btn-sm btn-default btn-flat"> <strong>Suivre la question</strong></a>
@@ -54,6 +65,49 @@
 
         </div>
     </div>
+
+    <div style="padding-top:15px">
+    <div class="row" id="responseBlock" style="display:none">
+        <div class="col-xs-12 col-sm-8 col-md-8">
+            <div class="box box-danger no-border">
+                    <div class="box-header with-border">
+                            <h5><strong>Nouvelle réponse</strong></h5>
+                    </div>
+                <div class="box-body">
+                    <form action="{% url 'new_answer' %}" method="post">
+                        {%csrf_token%} {% for error in form.non_field_errors %}
+                        <div class="form-group has-errors text-danger small">
+                            {{error}}
+                        </div>
+                        {% endfor %} {% for field in form %}
+                        <div class="form-group has-errors text-danger small">
+                            {{field.errors}}
+                        </div>
+                        <div class="form-group has-errors text-danger small">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-12 col-md-12" style="padding-top:20px;">
+                                <strong>{{ field.label }}</strong>
+                                <div style="width:100%">
+                                    {{field}}
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/> {% endfor %}
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-2 pull-right">
+                                <button class="btn btn-sm btn-flat bg-maroon">Enregistrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
 
     <div class="row" style="padding-top:15px;">
         <div class="col-xs-12 col-md-8">
@@ -77,6 +131,8 @@
             </div>
         </div>
     </div>
+
+    
     <div class="row" style="padding-top:50px;">
         <div class="col-xs-12 col-sm-8 col-md-8">
             <h3 class='display-6 aboutcm-primary-text'>{{ question.answer_set.all | length }} Réponse(s)</h3>
@@ -85,45 +141,68 @@
         <hr>
     </div>
     {% for answer in answers %}
-    <div class="row">
-        <div class="col-xs-12 col-sm-8 col-md-8">
-            <div class="box box-default collapsed-box no-border">
-                <div class="box-header with-border">
-                    <h3 class="box-title expandable">
-                        <i class='ion-person' style="font-size:1.3em"></i>{{ answer.username }}, le {{ answer.created_at }}
-                    </h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                        </button>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-8">
+                <div class="box box-default  no-border">
+                    <div class="box-header with-border">
+                        <h5 class="box-title expandable">
+                            {% if answer.anonymously is True %}
+                            <i class='fa fa-user-circle-o' style="font-size:1.3em"></i>&nbsp;Anonyme<br/>
+                            <small>Le {{ answer.created_at }}</small>
+                            {% else %}
+                                {% if answer.user_picture != ""  %}
+                                    <img src="{{ answer.user_picture.url }}" width=35px class="img-circle img-bordered-sm"/>
+                                {% else %}
+                                 <i class='fa fa-user-circle-o' style="font-size:1.3em"></i>
+                                {% endif %}
+                                &nbsp;{{ answer.username }} - {{ answer.user_title }} 
+                                <br/><small>Le {{ answer.created_at }}</small>
+                            {% endif %}
+                        </h5>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="box-body">
-                    {{ answer.details | safe }}
-
-                    <i class=""></i>
-                    <p>
-                        <a class="btn aboutcm-active btn-sm text-white">
-                            <i class="ion-thumbsup"></i> {{ answer.nb_upvotes }}
-                        </a>&nbsp;
-                        <a class="btn btn-danger btn-sm  text-white">
-                            <i class="ion-thumbsdown"></i> {{ answer.nb_downvotes }}</a>
-                        <span class='float-right'>                        
-                        <a class="btn btn-sm btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>                        <a class="btn btn-white text-primary"><i class='ion-social-twitter'></i></a>
-                        <a class="btn btn-white text-danger"><i class="ion-social-googleplus"></i></a>
-                    </span>
-                    </p>
-                    <div class="highlight">
-                        <form>
-                            <input type="text" class="form-control">
-                        </form>
+                    <div class="box-body">
+                        {{ answer.details | safe }}
+                        <i class=""></i>
+                        <p>
+                            <a class="btn aboutcm-active btn-sm text-white">
+                                <i class="ion-thumbsup"></i> {{ answer.nb_upvotes }}
+                            </a>&nbsp;
+                            <a class="btn btn-danger btn-sm  text-white">
+                                <i class="ion-thumbsdown"></i> {{ answer.nb_downvotes }}</a>
+                            <span class='float-right'>                        
+                            <a class="btn btn-sm btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>                        <a class="btn btn-white text-primary"><i class='ion-social-twitter'></i></a>
+                            <a class="btn btn-white text-danger"><i class="ion-social-googleplus"></i></a>
+                        </span>
+                        </p>
+                        <div class="highlight">
+                            <form>
+                                <input type="text" class="form-control">
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-    </div>
     {% endfor %}
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <!--<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>-->
+    <script type="text/javascript" src="{% static 'js/jquery-3.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.waypoints.js' %}"></script>
+    <script type="text/javascrpt" src="{% static 'js/infinite.js' %}"></script>
+    {{ parent }} 
+    {{ form.media }} 
+
+    <script>
+        $("#responseBtn").bind("click", function(){
+            $("#responseBlock").fadeToggle("slow", "linear");
+        });
+    </script>
 {% endblock %}

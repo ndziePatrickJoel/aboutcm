@@ -1,4 +1,4 @@
-/static/uploads/
-/uploads/
-/media/uploads/
-/media/media/
+/static/uploads/*
+/uploads/*
+/media/uploads/*
+/media/media/*

@@ -5,6 +5,7 @@ from ..models import View360QuestionCategory
 from ..forms import QuestionForm
 from dal import autocomplete
 from django.http import HttpResponseRedirect,Http404
+from haystack.query import SearchQuerySet
 
 # Create your views here.
 
@@ -46,4 +47,7 @@ def categoriesIndex(request):
         'categories_index.html',
         context={'categories': categories}
     )
+
+def autocomplete(request):
+
 

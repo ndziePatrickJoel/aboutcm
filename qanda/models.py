@@ -7,12 +7,15 @@ from django.db.models.signals import post_save
 # Create your models here.
 
 
+def user_directory_path(instance, filename):
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.TextField(max_length=300, blank=True)
     bio = RichTextField(blank=True)
     location = models.CharField(blank = True, max_length=1024)
-    user_picture = models.FileField(blank=True, null=True)
+    user_picture = models.ImageField(blank=True, null=True, upload_to=user_directory_path)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -33,7 +36,8 @@ class QuestionCategory(models.Model):
     name = models.CharField(max_length = 255, help_text="Entrez une catégorie de question")
     created_at = models.DateTimeField(auto_now_add=True)
     last_edited_at = models.DateTimeField(auto_now=True)
-    image = models.FileField(upload_to='static/uploads/question_category/', null = True)
+    image = models.ImageField(upload_to='uploads/question_category/', null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
 
     def __str__(self):
@@ -107,7 +111,7 @@ class Answer(models.Model):
     nb_upvotes = models.IntegerField(default=0)
     nb_downvotes = models.IntegerField(default=0)
     nb_views = models.IntegerField(default = 0)
-    details = RichTextUploadingField()
+    details = RichTextUploadingField(null = False)
     question = models.ForeignKey(Question, on_delete=models.SET_NULL, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -131,6 +135,8 @@ class View360Answer(models.Model):
     last_edited_at = models.DateTimeField(auto_now=True)
     question_id = models.IntegerField()
     positives_votes = models.IntegerField()
+    user_picture = models.FileField()
+    user_title = models.TextField()
 
     def __str__(self):
         return "Answer " + str(self.id) 
@@ -175,7 +181,7 @@ class View360Question(models.Model):
     category_name = models.TextField()
     category_id = models.IntegerField()
     username = models.TextField()
-    user_picture = models.FileField()
+    user_picture = models.ImageField()
     user_title = models.TextField()
 
     def __str__(self):

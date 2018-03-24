@@ -1,4 +1,6 @@
-{% if view360question_list %} {% for question in view360question_list %} {% load qanda_filters %}
+{% if view360question_list %} 
+{% load qanda_filters %}
+{% for question in view360question_list %} 
 <div>
     <div class="box box-solid">
 
@@ -15,11 +17,13 @@
 
 
         <div class="box-body">
+            <a href="{% url 'question_details' question.id %}" >
             <h5 style="color:#d81b60">
                 <strong>
                 {{ question.title | slice:":500" }}
                 </strong>
             </h5>
+            </a>
             <p class="">
                 {% for tag in question.tags|qanda_split:";" %}
                 <span class="badge badge-default"><a href="#" style='color:white '>{{ tag }}</a></span> {% endfor %}
